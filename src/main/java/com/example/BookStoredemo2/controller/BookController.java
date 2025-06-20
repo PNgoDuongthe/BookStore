@@ -31,6 +31,15 @@ public class BookController {
         this.fileUpload = fileUpload;
     }
 
+    @Controller
+    public class RedirectController {
+        @GetMapping("/")
+        public String redirectToHomepage() {
+            return "redirect:/homepage";
+        }
+    }
+
+
 
     @GetMapping("/homepage")
     public String homepage(Model model, @RequestParam(value = "keyword", required = false) String keyword) {
