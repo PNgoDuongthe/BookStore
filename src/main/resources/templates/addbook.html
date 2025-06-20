@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AddBook</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<style>
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+
+    .dropdown-menu {
+        left: -60px !important; /* Shift menu slightly to the left */
+    }
+</style>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center" href="homepage">
+            <i class="fa-solid fa-book me-2"></i> Bookly
+        </a>
+
+        <!-- Navigation Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto d-flex justify-content-evenly w-200">
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="homepage">
+                        <i class="fa-solid fa-house me-1"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="availablebook">
+                        <i class="fa-solid fa-book-open me-1"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="mybook">
+                        <i class="fa-solid fa-cart-shopping me-1"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="addbook">
+                        <i class="fa-solid fa-plus me-1"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- User Icon & Dropdown Menu -->
+        <div class="dropdown">
+            <a class="nav-link text-white dropdown-toggle d-flex align-items-center" href="#" role="button">
+                <i class="fa-solid fa-user fa-lg"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="login">Login</a></li>
+                <li><a class="dropdown-item" href="register">Register</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- form -->
+<div id="book-form-container" class="d-flex justify-content-center align-items-center vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow p-4 rounded">
+                    <h2 class="text-center mb-4">Enter Book Infomation</h2>
+                    <form th:action="@{/save}" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Book Title:</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="author" class="form-label">Author:</label>
+                            <input type="text" id="author" name="author" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price:</label>
+                            <input type="number" id="price" name="price" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Quantity:</label>
+                            <input type="number" id="quantity" name="quantity" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="desciption" class="form-label">Description:</label>
+                            <input type="text" id="desciption" name="description" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="book-image" class="form-label">Upload Image:</label>
+                            <input type="file" id="book-image" name="image" class="form-control" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Submit</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookly</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="/favicon.png.jpg" type="image/jpeg">
+    <style>
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+        .dropdown-menu {
+            left: -60px !important;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            transition: transform 0.3s;
+        }
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+        .carousel-item img {
+            height: 400px;
+            object-fit: cover;
+        }
+        .product-card img {
+            height: 400px;
+            object-fit: cover;
+        }
+
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            .carousel-item img {
+                height: 200px !important;
+            }
+
+            .product-card img {
+                height: 250px !important;
+            }
+
+            .product-card {
+                padding: 10px;
+            }
+
+            .product-card h5 {
+                font-size: 18px;
+            }
+
+            .product-card p {
+                font-size: 14px;
+            }
+
+            .input-group {
+                width: 100% !important;
+            }
+
+            .navbar .form-control {
+                font-size: 12px;
+                padding: 6px;
+            }
+
+            .navbar .btn {
+                padding: 6px 10px;
+            }
+
+            .dropdown-menu {
+                left: auto !important;
+                right: 0;
+            }
+
+            .navbar-nav {
+                flex-direction: row;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!--navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="homepage">
+            <i class="fa-solid fa-book me-2"></i> Bookly
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="#">
+                        <i class="fa-solid fa-house me-1"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="availablebook">
+                        <i class="fa-solid fa-book-open me-1"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="mybook">
+                        <i class="fa-solid fa-cart-shopping me-1"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="addbook">
+                        <i class="fa-solid fa-plus me-1"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Thanh tìm kiếm -->
+            <form class="d-flex me-3 w-100" th:action="@{/homepage}" method="get" style="max-width: 400px;">
+                <div class="input-group w-100">
+                    <input class="form-control" name="keyword" th:value="${keyword}" type="search" placeholder="Search books..."
+                           style="border-radius: 50px 0 0 50px;">
+                    <button class="btn btn-light" type="submit" style="border-radius: 0 50px 50px 0;">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </form>
+
+            <div class="dropdown me-3">
+                <a class="nav-link text-white dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                    <i class="fa-solid fa-user fa-lg"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="login">Login</a></li>
+                    <li><a class="dropdown-item" href="register">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Carousel -->
+<div id="bookCarousel" class="carousel slide mb-4 mt-5 pt-4" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="https://images.unsplash.com/photo-1576479854195-52883a461a68?q=80&w=3087&auto=format&fit=crop" class="d-block w-100" alt="Books">
+        </div>
+        <div class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1592492572204-81370305d4ea?q=80&w=2940&auto=format&fit=crop" class="d-block w-100" alt="Library">
+        </div>
+        <div class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1526199119161-4be1e3368d52?q=80&w=3174&auto=format&fit=crop" class="d-block w-100" alt="Reading">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+</div>
+
+<!-- Featured Books -->
+<div class="container">
+    <h2 class="mb-4">Featured Books</h2>
+    <div class="row">
+        <div th:each="b : ${books}" class="col-12 col-md-4 mb-4">
+            <div class="product-card text-center p-3 shadow rounded">
+                <img th:if="${b.image != null and b.image != ''}" th:src="${b.image}" class="book-image mb-2" alt="Book">
+                <h5 class="mt-2 fw-bold" th:text="${b.name}"></h5>
+                <p class="text-muted author-text" th:text="${b.author}"></p>
+                <p class="fw-bold price-text" th:text="${b.price} + ' đ'"></p>
+                <div class="d-flex justify-content-between gap-2">
+                    <a th:href="@{/viewdetails/{id}(id=${b.id})}" class="btn btn-primary flex-fill">View Details</a>
+                    <form th:action="@{/cart/add}" method="post" class="flex-fill">
+                        <input type="hidden" name="bookId" th:value="${b.id}">
+                        <a type="submit" class="btn btn-warning w-100" th:href="@{/mybook/{id}(id=${b.id})}">Add to Cart</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

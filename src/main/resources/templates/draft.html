@@ -1,0 +1,28 @@
+@PostMapping("/login")
+public String processLogin(@ModelAttribute("user") UserEntity userEntity, Model model){
+Optional<UserEntity> existsUser = userRepository.findByEmail(userEntity.getEmail());
+
+    if(existsUser.isPresent()){
+    UserEntity dbUser = existsUser.get();
+
+    if(passwordEncoder.matches(userEntity.getPassword(), dbUser.getPassword()) &&
+    userEntity.getUsername().equals(dbUser.getUsername())) {
+
+    // ✅ Tự tạo phiên đăng nhập
+    UsernamePasswordAuthenticationToken authToken =
+    new UsernamePasswordAuthenticationToken(
+    dbUser.getEmail(), // username
+    null,
+    List.of(new SimpleGrantedAuthority("ROLE_USER")) // hoặc lấy role từ DB
+    );
+    SecurityContextHolder.getContext().setAuthentication(authToken);
+
+    return "redirect:/homepage";
+    } else {
+    model.addAttribute("error", "Username or Password is not correct ");
+    }
+    } else {
+    model.addAttribute("error","Username or Password is not correct");
+    }
+    return "login";
+    }

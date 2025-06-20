@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AvailableBook</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+        .dropdown-menu {
+            left: -60px !important; /* Shift menu slightly to the left */
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center" href="homepage">
+            <i class="fa-solid fa-book me-2"></i> Bookly
+        </a>
+
+        <!-- Navigation Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto d-flex justify-content-evenly w-200">
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="homepage">
+                        <i class="fa-solid fa-house me-1"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="availablebook">
+                        <i class="fa-solid fa-book-open me-1"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="mybook">
+                        <i class="fa-solid fa-cart-shopping me-1"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="addbook">
+                        <i class="fa-solid fa-plus me-1"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- User Icon & Dropdown Menu -->
+        <div class="dropdown">
+            <a class="nav-link text-white dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                <i class="fa-solid fa-user fa-lg"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="login">Login</a></li>
+                <li><a class="dropdown-item" href="register">Register</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- table -->
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Book List</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Book Title</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="b : ${books}">
+            <td th:text="${b.id}"></td>
+            <td th:text="${b.name}"></td>
+            <td th:text="${b.author}"></td>
+            <td th:text="${b.price}"></td>
+            <td th:text="${b.quantity}"></td>
+            <td>
+                <a th:href="@{/mybook/{id}(id=${b.id})}" class="btn btn-primary btn-sm">Add</a>
+                <a th:href="@{/edit/{id}(id=${b.id})}" class="btn btn-warning btn-sm">Edit</a>
+                <a th:href="@{/deleteBook/{id}(id=${b.id})}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
